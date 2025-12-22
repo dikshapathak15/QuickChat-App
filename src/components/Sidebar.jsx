@@ -8,7 +8,7 @@ const Sidebar = ({ selectedUser, setSelectedUser }) => {
         <div className="flex justify-between items-center">
             <img src={assets.logo} alt="logo" className="max-w-40"/>
             <div className="relative py-2 group">
-                
+                <h1>hello jii</h1>
             </div>
         </div>
       </div>
