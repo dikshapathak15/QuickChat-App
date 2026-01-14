@@ -38,7 +38,7 @@ const LoginPage = () => {
 
         <button type="submit" className="py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer">{currState === "Sign Up"? "Create Account" : "Log In"}</button>
 
-        <div>
+        <div className="flex items-center gap-2 text-sm text-gray-500">
           <input type="chechbox" />
           <p>Agree to the terms of use & privacy policy.</p>
         </div>
