@@ -12,7 +12,7 @@ const server = http.createServer(app);
 app.use(express.json({limit:"4mb"}));
 app.use(cors()); ///enable all the url to connect with backend
 
-app.use('/api/status', (req,res)=> res.send("Server is live"))   //to check whether our backend server is running or not
+app.use('/apistatus', (req,res)=> res.send("Server is live"))   //to check whether our backend server is running or not
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log("Server is running on port" + PORT));
