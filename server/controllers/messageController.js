@@ -1,6 +1,6 @@
-import Message from "../models/Message";
-import User from "../models/User";
-import cloudinary from "../lib/cloudinary";
+import Message from "../models/Message.js";
+import User from "../models/User.js";
+import cloudinary from "../lib/cloudinary.js";
 import { io, userSocketMap } from "../server.js";
 
 //Get all user except logged in user
@@ -8,7 +8,7 @@ export const getUsersForSidebar = async (req, res) => {
   try {
     const userId = req.user._id;
     const filteredUsers = await User.find({ _id: { $ne: userId } }).select(
-      "-password",
+      "-password"
     );
 
     //count number of messages not seen
