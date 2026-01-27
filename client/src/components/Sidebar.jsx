@@ -1,11 +1,17 @@
 import React, { useContext } from "react";
-import assets, { userDummyData } from "../assets/assets";
+import assets from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { ChatContext } from "../../context/ChatContext";
 
-const Sidebar = ({ selectedUser, setSelectedUser }) => {
+const Sidebar = () => {
 
-  const {logout} = useContext(AuthContext);
+  const {getUsers, users, selectedUser, setSelectedUser,unseenMessages, setUnseenMessages} = useContext(ChatContext);
+
+  const {logout, onlineUsers} = useContext(AuthContext);
+
+  const [input , setInput] = useState(false);
+  const filteredUsers = input ? users.filter((user)=> user.fullName.toLowerCase().inclue(input.toLowerCase())) : users;
   const navigate = useNavigate();
   return (
     <div
@@ -34,6 +40,7 @@ const Sidebar = ({ selectedUser, setSelectedUser }) => {
         <div className="bg-[#282142] rounded-full flex items-center gap-2 py-3 px-4 mt-5">
           <img src={assets.search_icon} alt="Search" className="w-3" />
           <input
+          onChange={(e)=> setInput(e.target.value)}
             type="text"
             className="bg-transparent border-none outline-none text-white text-xs placeholder-[#c8c8c8] flex-1"
             placeholder="Search User..."
@@ -41,7 +48,7 @@ const Sidebar = ({ selectedUser, setSelectedUser }) => {
         </div>
       </div>
       <div className="flex flex-col">
-        {userDummyData.map((user, index) => (
+        {filteredUsers.map((user, index) => (
           <div onClick={()=> {setSelectedUser(user)}} key={index} className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${selectedUser?._id == user._id && 'bg-[#25195157]'}`}>
             <img
               src={user?.profilePic || assets.avatar_icon}
