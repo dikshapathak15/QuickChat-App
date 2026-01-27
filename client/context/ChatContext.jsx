@@ -38,6 +38,17 @@ export const ChatProvider = ({ children }) => {
   };
 
   //functiom to send message to selected user
+  const sendMessage = async (messageData) => {
+    try {
+        const {data} = await axios.get(`/api/messages/send/${selected._id}"`, messageData);
+        if(data.success){
+            setMessages((prevMessages) => [...prevMessages, data.newMessage])
+        }
+    } catch (error) {
+        toast.error(error.message)
+    }
+  }
+
   const value = {};
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 };
