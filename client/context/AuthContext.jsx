@@ -4,12 +4,16 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.baseURL = backendUrl;
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
+ 
+
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [authUser, setAuthUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState(null);
@@ -53,9 +57,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     setToken(null);
     setAuthUser(null);
-    setAuthUser([]);
+    setOnlineUsers([]);
     axios.defaults.headers.common["token"] = null;
-    toast.success("LOgged out successfully");
+    toast.success("Logged out successfully");
     socket.disconnect();
   };
 
