@@ -40,9 +40,9 @@ export const ChatProvider = ({ children }) => {
   //functiom to send message to selected user
   const sendMessage = async (messageData) => {
     try {
-      const { data } = await axios.get(
-        `/api/messages/send/${selected._id}"`,
-        messageData,
+      const { data } = await axios.post(
+        `/api/messages/send/${selectedUser._id}`,
+        messageData
       );
       if (data.success) {
         setMessages((prevMessages) => [...prevMessages, data.newMessage]);
@@ -53,10 +53,10 @@ export const ChatProvider = ({ children }) => {
   };
 
   //function to subscribe to messages for selected user
-  const subscribeToMessages = async () => {
+  const subscribeToMessages =  () => {
     if (!socket) return;
 
-    socket.on("newMessages", (newMessage) => {
+    socket.on("newMessage", (newMessage) => {
       if (selectedUser && newMessage.senderId === selectedUser._id) {
         newMessage.seen = true;
         setMessages((prevMessages) => [...prevMessages, newMessage]);

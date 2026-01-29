@@ -46,10 +46,10 @@ export const getMessages = async (req, res) => {
 
     await Message.updateMany(
       {
-        senderId: myId,
-        receiverId: selectedUserId,
+        senderId: selectedUserId,
+        receiverId: myId
       },
-      { senderId: selectedUserId, receiverId: myId },
+      { seen : true }
     );
 
     res.json({ success: true, messages });
@@ -74,8 +74,8 @@ export const markMessageAsSeen = async (req, res) => {
 export const sendMessage = async (req, res) => {
   try {
     const { text, image } = req.body;
-    const receiverId = req.params.receiverId;
-    const senderId = req.params.senderId;
+    const receiverId = req.params.id;
+    const senderId = req.user._id;
 
     let imageUrl;
     if (image) {
@@ -91,7 +91,7 @@ export const sendMessage = async (req, res) => {
     //emit the new message to receivers socket
     const receiverSocketId = userSocketMap[receiverId];
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("newMessages", newMessage);
+      io.to(receiverSocketId).emit("newMessage", newMessage);
     }
     res.json({ success: true, newMessage });
   } catch (error) {
